@@ -7,33 +7,58 @@ output:
 
 
 ## Loading and preprocessing the data
-```{r LoadData, echo=TRUE}
+
+```r
 dt <- read.csv("activity.csv")
 str(dt)
+```
+
+```
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : chr  "2012-10-01" "2012-10-01" "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+```
+
+```r
 summary(dt)
 ```
 
-## What is mean total number of steps taken per day?
-```{r DaySteps, echo=TRUE}
+```
+##      steps            date              interval     
+##  Min.   :  0.00   Length:17568       Min.   :   0.0  
+##  1st Qu.:  0.00   Class :character   1st Qu.: 588.8  
+##  Median :  0.00   Mode  :character   Median :1177.5  
+##  Mean   : 37.38                      Mean   :1177.5  
+##  3rd Qu.: 12.00                      3rd Qu.:1766.2  
+##  Max.   :806.00                      Max.   :2355.0  
+##  NA's   :2304
+```
 
+## What is mean total number of steps taken per day?
+
+```r
 ## Calculate the total steps per day
 dt2 <- aggregate(steps ~ date, dt, sum, na.rm=TRUE)
 
 # Plot histogram of total steps per day
 hist(dt2$steps, main="(1) Total Steps Per Day", xlab="Total Steps Per Day", ylab="Frequency")
+```
 
+![](PA1_template_files/figure-html/DaySteps-1.png)<!-- -->
+
+```r
 # Total mean and median steps per day
 mean_steps <- format(mean(dt2$steps, na.rm=TRUE), digits=2, nsmall=2) # 2 decimal places
 median_steps <- median(dt2$steps, na.rm=TRUE)
-
 ```
-- The mean steps per day is `r mean_steps` and the median steps per day is `r median_steps`
+- The mean steps per day is 10766.19 and the median steps per day is 10765
 
 
 ## What is the average daily activity pattern?
 
-```{r DailyPattern, echo=TRUE }
 
+```r
 ## group data set by interval and calculate the mean steps
 dt3 <- aggregate(steps ~ interval,dt, mean, na.rm=TRUE)
 
@@ -44,20 +69,23 @@ colnames(dt3) <- c("interval", "avgsteps")
 ## Plot a line graph of Average Steps against Interval
 plot(dt3$interval, dt3$avgsteps, type="l", col="blue", xlab="Interval", ylab="Average Steps", 
      main="Daily Activity Pattern")
+```
 
+![](PA1_template_files/figure-html/DailyPattern-1.png)<!-- -->
+
+```r
 ## get the interval with the highest average steps
 
 ## sort by descending order of average steps and get the interval of first row which is the highest number of steps
 dt4 <- dt3[order(dt3$avgsteps, decreasing=TRUE),]
 high_int <- dt4[1,"interval"]
-
 ```
-- The 5-minute interval with the maximum number of steps is `r high_int` 
+- The 5-minute interval with the maximum number of steps is 835 
 
 ## Imputing missing values
 
-```{r MissingVal, echo=TRUE}
 
+```r
 ## the total number of row missing values in the data set
 isna <- NROW(dt[is.na(dt$steps),])
 
@@ -89,22 +117,25 @@ dt_all2 <- aggregate(steps ~ date,dt_all, sum)
 
 # Plot histogram of total steps per day
 hist(dt_all2$steps, main="(2) Total Steps Per Day",xlab="Total Steps Per Day", ylab="Frequency")
+```
 
+![](PA1_template_files/figure-html/MissingVal-1.png)<!-- -->
+
+```r
 # Total mean and median steps per day
 mean_steps2 <- format(mean(dt_all2$steps), digits=2, nsmall=2) # 2 decimal places
 median_steps2 <- format(median(dt_all2$steps), digits=2, nsmall=2)
-
 ```
-- The number of rows with NAs number of steps is `r isna`
-- The mean steps per day is `r mean_steps2` and the median steps per day is `r median_steps2`
+- The number of rows with NAs number of steps is 2304
+- The mean steps per day is 10766.19 and the median steps per day is 10766.19
 
 The values do not differ a lot from the first estimates.  Imputing did not cause a noticeable change in the shape of the histogram but has somehow increased the frequency of steps in the range 10000-15000 Steps Per Day.
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r WeekPattern, echo=TRUE}
 
+```r
 ## make a copy of the data set with the NA filled with the mean of the interval 
 w <- dt_all
 
@@ -124,7 +155,8 @@ g <- ggplot(ag2,aes(interval,steps))
 g + facet_grid(.~cat) + geom_line(aes(color=cat), size=1) +
   labs(title="Average Steps per Interval", color="Legend") +
   labs(y="Average Steps",x="Interval") 
-
 ```
+
+![](PA1_template_files/figure-html/WeekPattern-1.png)<!-- -->
 
 The peak average steps was achieved during weekday.  But there was a better average steps for the weekend than for weekday for interval range 1000 - 1750.
