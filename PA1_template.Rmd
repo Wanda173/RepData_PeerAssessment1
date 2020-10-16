@@ -90,7 +90,7 @@ dt_all2 <- aggregate(steps ~ date,dt_all, sum)
 # Plot histogram of total steps per day
 hist(dt_all2$steps, main="(2) Total Steps Per Day",xlab="Total Steps Per Day", ylab="Frequency")
 
-# Total mean and median steps per day
+# Total mean and median Steps per day
 mean_steps2 <- format(mean(dt_all2$steps), digits=2, nsmall=2) # 2 decimal places
 median_steps2 <- format(median(dt_all2$steps), digits=2, nsmall=2)
 

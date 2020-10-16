@@ -122,7 +122,7 @@ hist(dt_all2$steps, main="(2) Total Steps Per Day",xlab="Total Steps Per Day", y
 ![](PA1_template_files/figure-html/MissingVal-1.png)<!-- -->
 
 ```r
-# Total mean and median steps per day
+# Total mean and median Steps per day
 mean_steps2 <- format(mean(dt_all2$steps), digits=2, nsmall=2) # 2 decimal places
 median_steps2 <- format(median(dt_all2$steps), digits=2, nsmall=2)
 ```
