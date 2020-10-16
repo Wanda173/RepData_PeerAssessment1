@@ -157,6 +157,6 @@ g + facet_grid(.~cat) + geom_line(aes(color=cat), size=1) +
   labs(y="Average Steps",x="Interval") 
 ```
 
-![](PA1_template_files/figure-html/WeekPattern-1.png)<!-- -->
+![](PA1_template_files/figure-html/weekpattern-1.png)<!-- -->
 
 The peak average steps was achieved during weekday.  But there was a better average steps for the weekend than for weekday for interval range 1000 - 1750.

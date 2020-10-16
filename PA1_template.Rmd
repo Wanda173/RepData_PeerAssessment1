@@ -103,7 +103,7 @@ The values do not differ a lot from the first estimates.  Imputing did not cause
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r WeekPattern, echo=TRUE}
+```{r weekpattern, echo=TRUE}
 
 ## make a copy of the data set with the NA filled with the mean of the interval 
 w <- dt_all
